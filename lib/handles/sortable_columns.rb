@@ -80,7 +80,7 @@ module Handles  #:nodoc:
           :default_sort_value => nil
         }
 
-        defaults.merge(attrs).each {|k, v| send("#{k}=", v)}
+        defaults.permit!.merge(attrs).each {|k, v| send("#{k}=", v)}
       end
 
       # Bracket access for convenience.
