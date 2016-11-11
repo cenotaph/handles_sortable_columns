@@ -80,7 +80,7 @@ module Handles  #:nodoc:
           :default_sort_value => nil
         }
 
-        defaults.permit!.merge(attrs).each {|k, v| send("#{k}=", v)}
+        defaults.merge(attrs).each {|k, v| send("#{k}=", v)}
       end
 
       # Bracket access for convenience.
@@ -218,9 +218,9 @@ module Handles  #:nodoc:
         # Already sorted?
         if pp[:column] == o[:column].to_s
           if o[:route_proxy]
-            url = o[:route_proxy].send(:url_for, params.merge({conf[:sort_param] => [("-" if pp[:direction] == :asc), o[:column]].join, conf[:page_param] => 1}))
+            url = o[:route_proxy].send(:url_for, params.permit!.merge({conf[:sort_param] => [("-" if pp[:direction] == :asc), o[:column]].join, conf[:page_param] => 1}))
           else
-            url = url_for(params.merge({conf[:sort_param] => [("-" if pp[:direction] == :asc), o[:column]].join, conf[:page_param] => 1}))
+            url = url_for(params.permit!.merge({conf[:sort_param] => [("-" if pp[:direction] == :asc), o[:column]].join, conf[:page_param] => 1}))
           end
           pcs << tpl.link_to(title, url, html_options)       # Opposite sort order when clicked.
 
